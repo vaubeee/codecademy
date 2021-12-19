@@ -502,12 +502,27 @@ print(12 in inventory)
 
 inventory = {"iron spear": 12, "invisible knife": 30, "needle of ambition": 10, "stone glove": 20, "the peacemaker": 65, "demonslayer": 50}
 print("the peacemaker" in inventory)
-'''
 
+# Scrabble
 letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 points = [1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 4, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10]
+
+all_letters = []
+for letter in letters:
+  all_letters.append(letter.lower())
+letters += all_letters
+points += points
+
 letter_to_points = dict(zip(letters, points))
 letter_to_points[" "] = 0
+
+player_to_words = {"player1":["BLUE", "TENNIS", "EXIT"], "wordNerd":["EARTH", "EYES", "MACHINE"], "Lexi Con":["ERASER", "BELLY", "HUSKY"], "Prof Reader":["ZAP", "COMA", "PERIOD"]}
+
+def play_word(player, word):
+  for players, words in player_to_words.items():
+      if player == players:
+        words.append(word)
+  return player_to_words
 
 def score_word(word):
   point_total = 0
@@ -518,18 +533,122 @@ def score_word(word):
       point_total += 0
   return point_total
 
+def update_point_totals():
+  player_to_points = {}
+  for player, words in player_to_words.items():
+    player_points = 0
+    for word in words:
+      player_points += score_word(word)
+    player_to_points[player] = player_points
+  return player_to_points
+
 brownie_points = score_word("BROWNIE")
 print(brownie_points)
-print("\n\n")
+brownie_points = score_word("brownie")
+print(brownie_points)
 
-player_to_words = {"player1":["BLUE", "TENNIS", "EXIT"], "wordNerd":["EARTH", "EYES", "MACHINE"], "Lexi Con":["ERASER", "BELLY", "HUSKY"], "Prof Reader":["ZAP", "COMA", "PERIOD"]}
-player_to_points = {}
+updated_points = update_point_totals()
+print(updated_points)
+play_word("player1", "pYtHoN")
+updated_points = update_point_totals()
+print(updated_points)
 
-for player, words in player_to_words.items():
-  player_points = 0
-  for word in words:
-    player_points += score_word(word)
-  player_to_points[player] = player_points
-print(player_to_points)
+# Data-Types
+my_int = 5
+print(type(my_int))
+
+my_dict = {}
+print(type(my_dict))
+
+my_list = []
+print(type(my_list))
+
+# CLasses
+class Facade: #defining a class
+  pass # skips all following code in class (eg for developing purposes)
+facade_1 = Facade() # Instantiation of "Object"_1 of Class (OOP)
+facade_2 = Facade() # Object_2
+print(type(facade_1))
+
+class Dog:
+  dog_time_dilation = 7
+ 
+  def time_explanation(self):
+    print("Dogs experience {} years for every 1 human year.".format(self.dog_time_dilation))
+ 
+pipi_pitbull = Dog()
+pipi_pitbull.time_explanation()
+
+class DistanceConverter:
+  kms_in_a_mile = 1.609
+  def how_many_kms(self, miles):
+    return miles * self.kms_in_a_mile
+ 
+converter = DistanceConverter()
+kms_in_5_miles = converter.how_many_kms(5)
+print(f"5 miles equal {kms_in_5_miles} kilometers.")
+
+class Circle:
+  pi = 3.14
+  def area(self, radius):
+    area = self.pi * radius ** 2
+    return area
+
+circle = Circle()
+
+pizza_diameter = 12
+teaching_table_diameter = 36
+round_room_diameter = 11460
+
+pizza_radius = pizza_diameter/ 2
+teaching_table_radius = teaching_table_diameter / 2
+round_room_radius = round_room_diameter / 2
+
+pizza_area = circle.area(pizza_radius)
+teaching_table_area = circle.area(teaching_table_radius)
+round_room_area = circle.area(round_room_radius)
+
+print(pizza_area)
+print(teaching_table_area)
+print(round_room_area)
+
+class Grade:
+  minimum_passing = 65
+
+# Class -> Constructor method
+class Shouter:
+  def __init__(self):
+    print("HELLO?!")
+
+shout1 = Shouter()
+shout2 = Shouter()
+
+class ShoutLoud:
+  def __init__(self, phrase):
+    # make sure phrase is a string
+    if type(phrase) == str:
+ 
+      # then shout it out
+      print(phrase.upper())
+ 
+shout1 = ShoutLoud("shout")
+# prints "SHOUT"
+ 
+shout2 = ShoutLoud("shout")
+# prints "SHOUT"
+ 
+shout3 = ShoutLoud("let it all out")
+# prints "LET IT ALL OUT"
+
+class Circle:
+  pi = 3.14
   
-   
+  # constructor:
+  def __init__(self, diameter):
+    print(f"New circle with diameter: {diameter}")
+
+# call:
+teaching_table = Circle(36)
+'''
+
+# Instance Variables
