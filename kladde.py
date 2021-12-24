@@ -684,8 +684,8 @@ for element in can_we_count_it:
     
   else:
     print(str(type(element)) + " does not have the count attribute :(")
-'''
 
+'''
 #Constructors
 class Circle:
   pi = 3.14
@@ -698,6 +698,9 @@ class Circle:
     circumference = 2 * self.pi * self.radius
     return circumference
 
+  def __repr__(self):
+    return (f"Circle with radius {self.radius}")
+
 medium_pizza = Circle(12)
 teaching_table = Circle(36)
 round_room = Circle(11460)
@@ -706,4 +709,17 @@ print(medium_pizza.circumference())
 print(teaching_table.circumference())
 print(round_room.circumference())
 
+print(medium_pizza) #prints out def __repr__
+print(teaching_table)
+print(round_room)
 
+'''
+#dir
+print(dir(5))
+print("")
+
+def this_function_is_an_object():
+  return
+
+print(dir(this_function_is_an_object))
+'''
