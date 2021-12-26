@@ -721,6 +721,7 @@ def this_function_is_an_object():
 
 print(dir(this_function_is_an_object))
 '''
+'''
 class Student:
   def __init__(self, name, year):
     self.name = name
@@ -755,7 +756,7 @@ roger.add_grade(Grade(95))
 
 pieter.print_grades()
 roger.print_grades()
-
+'''
 '''
 Great job! You’ve created two classes and defined their interactions. This is object-oriented programming! From here you could:
 
@@ -768,3 +769,29 @@ called .attendance, with dates as keys and booleans as values
 that indicate whether the student attended school that day.
 Write your own classes to do whatever logic you want!
 '''
+# Define your exception up here:
+class OutOfStock(Exception):
+  pass
+
+# Update the class below to raise OutOfStock
+class CandleShop:
+  name = "Here's a Hot Tip: Buy Drip Candles"
+  def __init__(self, stock):
+    self.stock = stock
+    
+  def buy(self, color):
+    if self.stock[color] < 1:
+      raise OutOfStock
+      
+    self.stock[color] = self.stock[color] - 1
+
+candle_shop = CandleShop({'blue': 6, 'red': 2, 'green': 0})
+try:
+  candle_shop.buy('blue')
+  candle_shop.buy('green')
+except OutOfStock:
+  for key, value in candle_shop.stock.items():
+    if  value < 1:
+      print(f"Color {key} is out of stock!")
+      print(CandleShop.name)
+
