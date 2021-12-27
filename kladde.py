@@ -769,6 +769,7 @@ called .attendance, with dates as keys and booleans as values
 that indicate whether the student attended school that day.
 Write your own classes to do whatever logic you want!
 '''
+'''
 # Define your exception up here:
 class OutOfStock(Exception):
   pass
@@ -794,4 +795,57 @@ except OutOfStock:
     if  value < 1:
       print(f"Color {key} is out of stock!")
       print(CandleShop.name)
+'''
+'''
+#override class method
+class Message:
+  def __init__(self, sender, recipient, text):
+    self.sender = sender
+    self.recipient = recipient
+    self.text = text
 
+class User:
+  def __init__(self, username):
+    self.username = username
+    
+  def edit_message(self, message, new_text):
+    if message.sender == self.username:
+      message.text = new_text
+      
+class Admin(User):
+  def edit_message(self, message, new_text):
+    message.text = new_text
+
+#adding parameter to inherited constructor via super()
+class PotatoSalad:
+  print("Potatoe Salad:")
+  def __init__(self, potatoes, celery, onions):
+    self.potatoes = potatoes
+    self.celery = celery
+    self.onions = onions 
+
+    print(f"Potatoes: {potatoes}")
+    print(f"Celery: {celery}")
+    print(f"Onions: {onions}")
+    
+class RaisinPotatoSalad(PotatoSalad):
+  def __init__(self, potatoes, celery, onions, raisin):
+    print("Potatoe Salad with raisins:")
+    super().__init__(potatoes, celery, onions)
+    self.raisin = raisin
+    print(f"Raisins: {raisin}")
+
+class EggPotatoSalad(PotatoSalad):
+  def __init__(self, potatoes, celery, onions, eggs):
+    print("Potatoe Salad with eggs:")
+    super().__init__(potatoes, celery, onions)
+    self.eggs = eggs
+    eggs = potatoes * 2
+    print(f"Eggs: {eggs}") 
+    
+PotatoSalad(5,2,3)
+print("\n")
+RaisinPotatoSalad(4,1,2,45)
+print("\n")
+EggPotatoSalad(3,1,3,0)
+'''
