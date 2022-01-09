@@ -848,4 +848,511 @@ print("\n")
 RaisinPotatoSalad(4,1,2,45)
 print("\n")
 EggPotatoSalad(3,1,3,0)
+
+# Own Dunder Methods
+class Atom:
+  def __init__(self, label):
+    self.label = label
+    
+  def __add__(self, other):
+    return Molecule([self, other])
+  
+  def __repr__(self):
+    return self.label
+    
+class Molecule:
+  def __init__(self, atoms):
+    if type(atoms) is list:
+	    self.atoms = atoms
+  def __repr__(self):
+    return (f"{salt.atoms[0].label}{salt.atoms[1].label}")
+
+sodium = Atom("Na")
+chlorine = Atom("Cl")
+salt = Molecule([sodium, chlorine])
+newsalt = sodium + chlorine
+
+print(salt)
+print(newsalt)
+
+class UserGroup:
+  def __init__(self, users, permissions):
+    self.user_list = users
+    self.permissions = permissions
+ 
+  def __iter__(self):
+    return iter(self.user_list)
+ 
+  def __len__(self):
+    return len(self.user_list)
+ 
+  def __contains__(self, user):
+    return user in self.user_list
+
+class User:
+  def __init__(self, username):
+    self.username = username
+ 
+diana = User('diana')
+frank = User('frank')
+jenn = User('jenn')
+ 
+can_edit = UserGroup([diana, frank], {'can_edit_page': True})
+can_delete = UserGroup([diana, jenn, frank], {'can_delete_posts': True})
+ 
+print(len(can_edit))
+# Prints 2
+ 
+for user in can_edit:
+  print(user.username)
+# Prints "diana" and "frank"
+ 
+if frank in can_delete:
+  print("Since when do we allow Frank to delete things? Does no one remember when he accidentally deleted the site?")
+ 
+
+# working with classes
+class Business:
+  def __init__(self, name, franchises):
+    self.name = name
+    self.franchises = franchises
+
+  def __repr__(self):
+    return f'{self.name}, {self.franchises}'
+
+class Franchise:
+  def __init__(self, address, menus):
+    self.address = address
+    self.menus = menus
+
+  def __repr__(self):
+    return f'Store: {self.address}'
+
+  def available_menus(self, time):
+    available_menu = []
+    
+    for menu in self.menus:
+      if time >= menu.start_time and time <= menu.end_time:
+        available_menu.append(menu)
+
+    return available_menu
+
+class Menu:
+  def __init__(self, name, items, start_time, end_time):
+    self.name = name
+    self.items = items
+    self.start_time = start_time
+    self.end_time = end_time
+  
+  def __repr__(self):
+    return f'Our {self.name}-Menu: available from {self.start_time} to {self.end_time}'
+
+  def calculate_bill(self, purchased_items):
+    total_price = 0.00
+    for item in purchased_items:
+      if item in self.items:
+        total_price += self.items[item]
+    return f'Your total is: {total_price}0 $'
+
+brunch_items = {
+  'pancakes': 7.50, 'waffles': 9.00, 'burger': 11.00, 'home fries': 4.50, 'coffee': 1.50, 'espresso': 3.00, 'tea': 1.00, 'mimosa': 10.50, 'orange juice': 3.50
+}
+brunch_menu = Menu("Brunch", brunch_items, 1100, 1600)
+
+early_bird_items = {
+  'salumeria plate': 8.00, 'salad and breadsticks (serves 2, no refills)': 14.00, 'pizza with quattro formaggi': 9.00, 'duck ragu': 17.50, 'mushroom ravioli (vegan)': 13.50, 'coffee': 1.50, 'espresso': 3.00,
+}
+early_bird_menu = Menu("Early bird", early_bird_items,1500, 1800)
+
+dinner_items = {
+  'crostini with eggplant caponata': 13.00, 'ceaser salad': 16.00, 'pizza with quattro formaggi': 11.00, 'duck ragu': 19.50, 'mushroom ravioli (vegan)': 13.50, 'coffee': 2.00, 'espresso': 3.00,
+}
+dinner_menu = Menu("Dinner", dinner_items, 1700, 2300)
+
+kids_items = {
+  'chicken nuggets': 6.50, 'fusilli with wild mushrooms': 12.00, 'apple juice': 3.00
+}
+kids_menu = Menu("Kids", kids_items, 1100, 2100)
+
+print(brunch_menu)
+bill = brunch_menu.calculate_bill(["pancakes", "home fries", "coffee"])
+print(bill)
+print(early_bird_menu)
+bill = early_bird_menu.calculate_bill(["salumeria plate", "mushroom ravioli (vegan)"])
+print(bill)
+print("\n")
+
+menus = [brunch_menu, early_bird_menu, dinner_menu, kids_menu]
+flagship_store = Franchise("1232 West End Road", menus)
+new_installment = Franchise("12 East Mulberry Street", menus)
+print(flagship_store)
+print(flagship_store.available_menus(1200))
+print(flagship_store.available_menus(1700))
+print("\n")
+
+basta = Business("Basta Fazoolin' with my Heart", [flagship_store, new_installment])
+print(f"All stores: {basta}")
+print(f"No. 1 {basta.franchises[0]}")
+print(f"No. 2 {basta.franchises[1]}")
+print("\n")
+
+# Creatin a new Business using all of the above classes:
+arepa_items = {
+  'arepa pabellon': 7.00, 'pernil arepa': 8.50, 'guayanes arepa': 8.00, 'jamon arepa': 7.50
+}
+arepas_menu = Menu("Main Menu", arepa_items, 1000, 2000)
+arepas_place = Franchise("189 Fitzgerald Avenue", arepas_menu)
+arepa = Business("Take a' Arepa", arepas_place)
+print(arepa)
+print(arepa.franchises)
+print(arepa.franchises.menus)
+print(arepa.franchises.menus.items)
+bill = arepas_menu.calculate_bill(["arepa pabellon", "guayanes arepa"])
+print(bill)
+print("\n")
+
+# strings
+import string
+def unique_english_letters(word):
+  i = 0
+  letters = string.ascii_letters
+  for letter in letters:
+    if letter in word:
+      i += 1
+  return i
+
+print(unique_english_letters("mississippi"))
+print(unique_english_letters("Apple"))
+
+def count_char_x(word, x):
+  i = 0
+  for character in word:
+    if character == x:
+      i += 1
+  return i
+
+print(count_char_x("mississippi", "s"))
+print(count_char_x("mississippi", "m"))
+
+def count_multi_char_x(word, x):
+  splits = word.split(x)
+  return(len(splits)-1)
+def count_multi_char_x_1(word, x):
+  counts = word.count(x)
+  return(counts)
+
+print(count_multi_char_x_1("mississippi", "iss"))
+print(count_multi_char_x_1("apple", "pp"))
+
+
+def substring_between_letters(word, start, end):
+  start = word.find(start)
+  end = word.find(end)
+  if start >= 0 and end >= 0:
+    return (word[start +1:end])
+  return word
+
+print(substring_between_letters("apple", "p", "e"))
+print(substring_between_letters("apple", "p", "c"))
+
+def x_length_words(sentence, x):
+  splitted = sentence.split()
+  result = True
+  i = 0
+  for x in range(len(splitted)):
+    if len(splitted[i]) < x:
+      result = False
+      i += 1
+  return(result)
+print(x_length_words("i like apples", 2))
+print(x_length_words("he likes apples", 2))
+
+def x_length_words1(sentence, x):
+  words = sentence.split(" ")
+  for word in words:
+    if len(word) < x:
+      return False
+  return True
+print(x_length_words1("i like apples", 2))
+print(x_length_words1("he likes apples", 2))
+
+# strings advanced
+
+def check_for_name(sentence, name):
+  sentence = sentence.lower()
+  name = name.lower()
+  if name in sentence:
+    return True
+  return False
+
+#better:
+def check_for_name1(sentence, name):
+  return name.lower() in sentence.lower()
+
+print(check_for_name1("My name is Jamie", "Jamie"))
+print(check_for_name1("My name is jamie", "Jamie"))
+print(check_for_name1("My name is JAMIE", "Jamie"))
+
+def every_other_letter(word):
+  every_other = ""
+  for i in range(0, len(word), 2):
+    every_other += word[i]
+  return every_other
+print(every_other_letter("Codecademy"))
+print(every_other_letter("Hello world!"))
+print(every_other_letter(""))
+
+# or
+def every_other_letter(word):
+  letter = ""
+  for character in word[::2]:
+    letter += character
+  return letter
+
+print(every_other_letter("Codecademy"))
+print(every_other_letter("Hello world!"))
+print(every_other_letter(""))
+
+def reverse_string(word):
+  reverse_string = ""
+  for character in word[::-1]:
+    reverse_string += character
+  return reverse_string
+
+print(reverse_string("Codecademy"))
+print(reverse_string("Hello world!"))
+
+def reverse_string(word):
+  reverse_string = ""
+  for i in range(len(word) -1, 0 -1, -1):
+    reverse_string += word[i]
+  return reverse_string
+
+print(reverse_string("Codecademy"))
+print(reverse_string("Hello world!"))
+
+# dictionaries
+def sum_values(dictionary):
+  sum = 0
+  for val in dictionary.values():
+    sum += val
+  return sum
+print(sum_values({"milk":5, "eggs":2, "flour": 3}))
+
+def even_keys(dictionary):
+  sum = 0
+  for key, value in dictionary.items():
+    if key % 2 == 0:
+      sum += value
+  return sum
+
+print(even_keys({1:5, 2:2, 3:3}))
+print(even_keys({10:1, 100:2, 1000:3}))
+
+#or:
+def sum_even_keys(my_dictionary):
+  total = 0
+  for key in my_dictionary.keys():
+    if key%2 == 0:
+      total += my_dictionary[key]
+  return total
+print(sum_even_keys({1:5, 2:2, 3:3}))
+print(sum_even_keys({10:1, 100:2, 1000:3}))
+
+def add_ten(dictionary):
+  for key, value in dictionary.items():
+    value += 10
+    dictionary[key] = value
+  return dictionary
+print(add_ten({1:5, 2:2, 3:3}))
+print(add_ten({10:1, 100:2, 1000:3}))
+
+def values_that_are_keys(dictionary):
+  values_found = []
+  for value in dictionary.values():
+    if value in dictionary.keys():
+      values_found.append(value)
+  return values_found
+print(values_that_are_keys({1:100, 2:1, 3:4, 4:10}))
+print(values_that_are_keys({"a":"apple", "b":"a", "c":100}))
+
+def max_key(dictionary):
+  largest_key = float("-inf")
+  largest_value = float("-inf")
+  for key, value in dictionary.items():
+    if value > largest_value:
+      largest_value = value
+      largest_key = key
+  return largest_key
+
+print(max_key({1:100, 2:1, 3:4, 4:10}))
+print(max_key({"a":100, "b":10, "c":1000}))
+
+# dictionaries advanced
+def word_length_dictionary(words):
+  new_dictionary = {}
+  for string in words:
+    new_dictionary[string] = len(string) 
+  return new_dictionary
+
+print(word_length_dictionary(["apple", "dog", "cat"]))
+print(word_length_dictionary(["a", ""]))
+
+def frequency_dictionary(words):
+  new_dictionary = {}
+  
+  for string in words:
+    if string in new_dictionary.keys():
+      new_dictionary[string] += 1
+    else:
+      new_dictionary[string] = 0
+      new_dictionary[string] += 1
+      
+  return new_dictionary
+print(frequency_dictionary(["apple", "apple", "cat", 1]))
+print(frequency_dictionary([0,0,0,0,0]))
+
+# better:
+def frequency_dictionary(words):
+  freqs = {}
+  for word in words:
+    if word not in freqs:
+      freqs[word] = 0
+    freqs[word] += 1
+  return freqs
+print(frequency_dictionary(["apple", "apple", "cat", 1]))
+print(frequency_dictionary([0,0,0,0,0]))
+
+
+def unique_values(dictionary):
+  uniques = []
+  for value in dictionary.values():
+    if value not in uniques:
+      uniques.append(value) 
+  return len(uniques)
+
+print(unique_values({0:3, 1:1, 4:1, 5:3}))
+print(unique_values({0:3, 1:3, 4:3, 5:3}))
+
+
+def count_first_letter(names):
+  letters = {}
+  i = 0
+  for key in names:
+    lastname = list(names.keys())[i]
+    length = len(list(names.values())[i])
+    firstletter = lastname[0]    
+    if firstletter not in letters:
+      letters[firstletter] = 0
+      letters[firstletter] += length
+    else:
+      letters[firstletter] += length
+    i += 1
+  return letters
+print(count_first_letter({"Stark": ["Ned", "Robb", "Sansa"], "Snow" : ["Jon"], "Lannister": ["Jaime", "Cersei", "Tywin"]}))
+print(count_first_letter({"Stark": ["Ned", "Robb", "Sansa"], "Snow" : ["Jon"], "Sannister": ["Jaime", "Cersei", "Tywin"]}))
+
+#better:
+def count_first_letter(names):
+  letters = {}
+  for key in names:
+    first_letter = key[0]
+    if first_letter not in letters:
+      letters[first_letter] = 0
+    letters[first_letter] += len(names[key])
+  return letters
+print(count_first_letter({"Stark": ["Ned", "Robb", "Sansa"], "Snow" : ["Jon"], "Lannister": ["Jaime", "Cersei", "Tywin"]}))
+print(count_first_letter({"Stark": ["Ned", "Robb", "Sansa"], "Snow" : ["Jon"], "Sannister": ["Jaime", "Cersei", "Tywin"]}))
+
+# classes
+class DriveBot:
+
+  all_disabled = False
+  latitude = -999999
+  longitude = -999999
+  robot_count = 0
+
+  def __init__(self, motor_speed=0, direction=0, sensor_range=0, id = 0):
+      self.motor_speed = motor_speed
+      self.direction = direction
+      self.sensor_range = sensor_range
+      DriveBot.robot_count += 1
+      self.id = DriveBot.robot_count
+  
+  def control_bot(self, new_speed, new_direction):
+    self.motor_speed = new_speed
+    self.direction = new_direction
+  
+  def adjust_sensor(self, new_sensor_range):
+    self.sensor_range = new_sensor_range
+
+DriveBot.longitude = 50.0
+DriveBot.latitude = - 50.0
+DriveBot.all_disabled = True  
+  
+robot_1 = DriveBot(5 , 90, 10)
+print(robot_1.motor_speed)
+print(robot_1.direction)
+print(robot_1.sensor_range)
+
+robot_1.control_bot(10,180)
+robot_1.adjust_sensor(20)
+print(robot_1.motor_speed)
+print(robot_1.direction)
+print(robot_1.sensor_range)
+
+robot_2 = DriveBot(10, 270, 35)
+robot_3 = DriveBot(50, 170, 55)
+print(robot_1.latitude)
+print(robot_2.longitude)
+print(robot_3.all_disabled)
+
+print(robot_1.id)
+print(robot_2.id)
+print(robot_3.id)
 '''
+# classes advanced
+class Robot:
+  all_disabled = False
+  latitude = -999999
+  longitude = -999999
+  robot_count = 0
+
+  def __init__(self, speed = 0, direction = 180, sensor_range = 10):
+      self.speed = speed
+      self.direction = direction
+      self.sensor_range = sensor_range
+      self.obstacle_found = False
+      Robot.robot_count += 1
+      self.id = Robot.robot_count
+
+  def control_bot(self, new_speed, new_direction):
+      self.speed = new_speed
+      self.direction = new_direction
+
+  def adjust_sensor(self, new_sensor_range):
+      self.sensor_range = new_sensor_range
+
+  def avoid_obstacles(self):
+      if self.obstacle_found:
+          self.direction = (self.direction + 180) % 360
+          self.obstacle_found = False
+
+class DriveBot(Robot):
+    def __init__(self, motor_speed = 0, direction = 180, sensor_range = 10):
+        super().__init__(motor_speed, direction, sensor_range)
+
+class WalkBot(Robot):
+    def __init__(self, steps_per_minute = 0, direction = 180, sensor_range = 10, step_length = 5):
+        super().__init__(steps_per_minute, direction, sensor_range)
+        self.step_length = step_length
+
+robot_1 = DriveBot()
+robot_2 = WalkBot()
+robot_3 = WalkBot(20, 90, 15, 10)
+
+print(robot_2.id)
+print(robot_3.step_length)
+print(robot_1.speed)
+
+
